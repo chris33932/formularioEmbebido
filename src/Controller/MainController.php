@@ -11,8 +11,63 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
+
+/**
+ * @Route("/main")
+ */
 class MainController extends AbstractController
 {
+    /**
+     * @Route("/new", name="exp_new", methods={"GET","POST"})
+     */
+    public function new(Request $request): Response
+    {
+        
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+
+            //aca iria el embebido 
+            $orignalExp = new ArrayCollection();
+            foreach ($user->getExp() as $exp) {
+                $orignalExp->add($exp);
+            }
+    
+            $form = $this->createForm(UserType::class, $user);
+    
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted()) {
+                // get rid of the ones that the user got rid of in the interface (DOM)
+                foreach ($orignalExp as $exp) {
+                    // check if the exp is in the $user->getExp()
+    //                dump($user->getExp()->contains($exp));
+                    if ($user->getExp()->contains($exp) === false) {
+                        $entityManager->remove($exp);
+                    }
+                }
+                $entityManager->persist($user);
+                
+            }
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+
+            //return $this->redirectToRoute('hecho_show', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/new.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    
     /**
      * @Route("/{id}", name="homepage")
      * @param Request $request
@@ -57,4 +112,7 @@ class MainController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+
+
 }

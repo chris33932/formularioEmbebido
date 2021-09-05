@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hecho index{% endblock %}
+
+{% block body %}
+    <h1>Hecho index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for hecho in hechos %}
+            <tr>
+                <td>{{ hecho.id }}</td>
+                <td>{{ hecho.fecha ? hecho.fecha|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('hecho_show', {'id': hecho.id}) }}">show</a>
+                    <a href="{{ path('hecho_edit', {'id': hecho.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('hecho_new') }}">Create new</a>
+{% endblock %}

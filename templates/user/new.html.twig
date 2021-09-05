@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+    <h1>Create new User</h1>
+
+   {{ parent() }}
+<div class="container">
+     {{form_start(form)}}
+      {{form_row(form.fullname)}}
+     {# render each row and field in the embedded form, in this example it's rendering the experience (Exp) fiels as rows #}
+                <div class="col-sm-8 col-sm-offset-2" id="exp_list" data-prototype="{{form_widget(form.exp.vars.prototype)|e('html_attr') }}"
+                {% for row in form.exp %}             
+
+
+                    
+                   <div class="card">
+                        <div class="card-header"> 
+                            <strong>{{(row.vars.value.title)}}</strong> 
+                        </div>
+                        <div class="card-body">
+                           {{ form_row(row)}}
+                        </div>
+                  </div>
+               {% endfor %}
+
+     
+</div>
+{{ form_end(form) }}
+
+    <a href="{{ path('user_index') }}">back to list</a>
+{% endblock %}
+
+
+
+

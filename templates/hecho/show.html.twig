@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hecho{% endblock %}
+
+{% block body %}
+    <h1>Hecho</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ hecho.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ hecho.fecha ? hecho.fecha|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('hecho_index') }}">back to list</a>
+
+    <a href="{{ path('hecho_edit', {'id': hecho.id}) }}">edit</a>
+   
+
+    {{ include('hecho/_delete_form.html.twig') }}
+{% endblock %}

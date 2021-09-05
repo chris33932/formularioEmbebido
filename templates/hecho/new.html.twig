@@ -1,0 +1,44 @@
+{#{% extends 'base.html.twig' %}
+
+{% block title %}New Hecho{% endblock %}
+
+{% block body %}
+    <h1>Create new Hecho</h1>
+
+    {{ include('hecho/_form.html.twig') }}
+
+    <a href="{{ path('hecho_index') }}">back to list</a>
+{% endblock %}
+#}
+{% extends 'base.html.twig' %}
+
+{% block title %}Home controller{% endblock %}
+
+{% block body %}{{ parent() }}
+<div class="container">
+     {{form_start(form)}}
+      {{form_row(form.fecha)}}
+     {# render each row and field in the embedded form, in this example it's rendering the experience (Exp) fiels as rows #}
+                <div class="col-sm-8 col-sm-offset-2" id="exp_list" data-prototype="{{form_widget(form.detalleHechos.vars.prototype)|e('html_attr') }}"
+                {% for row in form.detalleHechos %}             
+
+
+                    
+                   <div class="card">
+                        <div class="card-header"> 
+                            <strong>Nro hecho: {{(row.vars.value.Id)}}</strong> 
+                        </div>
+                        <div class="card-body">
+                           {{ form_row(row)}}
+                        </div>
+                  </div>
+               {% endfor %}
+
+     
+</div>
+ 
+{{ form_end(form) }}
+
+<a href="{{ path('hecho_index') }}">back to list</a>
+
+{% endblock %}
