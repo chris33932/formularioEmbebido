@@ -18,8 +18,10 @@ class DetalleHecho
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Victima", inversedBy="detalleHecho")
+     * @ORM\JoinColumn(name="victima_id", referencedColumnName="id")
      */
+
     private $victima;
 
     /**
@@ -36,6 +38,12 @@ class DetalleHecho
      * @ORM\ManyToOne(targetEntity=Hecho::class, inversedBy="detalleHechos",cascade={"persist"})
      */
     private $hechoNro;
+
+
+
+
+
+
 
     public function getId(): ?int
     {

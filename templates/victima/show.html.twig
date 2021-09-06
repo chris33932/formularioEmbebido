@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Victima{% endblock %}
+
+{% block body %}
+    <h1>Victima</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ victima.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ victima.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ victima.apellido }}</td>
+            </tr>
+            <tr>
+                <th>Tipo_documento</th>
+                <td>{{ victima.tipoDocumento }}</td>
+            </tr>
+            <tr>
+                <th>Nro_documento</th>
+                <td>{{ victima.nroDocumento }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('victima_index') }}">back to list</a>
+
+    <a href="{{ path('victima_edit', {'id': victima.id}) }}">edit</a>
+
+    {{ include('victima/_delete_form.html.twig') }}
+{% endblock %}

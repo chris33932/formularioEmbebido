@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Victima index{% endblock %}
+
+{% block body %}
+    <h1>Victima index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Tipo_documento</th>
+                <th>Nro_documento</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for victima in victimas %}
+            <tr>
+                <td>{{ victima.id }}</td>
+                <td>{{ victima.nombre }}</td>
+                <td>{{ victima.apellido }}</td>
+                <td>{{ victima.tipoDocumento }}</td>
+                <td>{{ victima.nroDocumento }}</td>
+                <td>
+                    <a href="{{ path('victima_show', {'id': victima.id}) }}">show</a>
+                    <a href="{{ path('victima_edit', {'id': victima.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('victima_new') }}">Create new</a>
+{% endblock %}
